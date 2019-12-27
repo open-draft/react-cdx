@@ -1,0 +1,26 @@
+{
+  "name": "react-cdx",
+  "version": "0.1.0",
+  "description": "React component for code snippets highlight and preview",
+  "main": "lib/index.js",
+  "module": "src/index.ts",
+  "repository": "https://github.com/open-draft/react-cdx",
+  "author": "Artem Zakharchenko <kettanaito@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c rollup.config.js"
+  },
+  "files": [
+    "README.md",
+    "lib"
+  ],
+  "devDependencies": {
+    "@types/react": "^16.9.17",
+    "react": "^16.12.0",
+    "rollup": "^1.27.14",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "prism-react-renderer": "^1.0.2"
+  }
+}
