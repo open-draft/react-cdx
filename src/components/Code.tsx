@@ -29,12 +29,13 @@ const Pre = styled.pre<{ showLineNumbers?: boolean }>`
   text-align: start;
   padding: ${({ showLineNumbers }) =>
     showLineNumbers ? '1rem 1rem 1rem 0' : '1rem'};
+  overflow: auto;
 `
 
 const LineNumber = styled.span`
   display: inline-flex;
   justify-content: flex-end;
-  padding-right: 0.5rem;
+  margin-right: 0.75rem;
   width: 2em;
   user-select: none;
   opacity: 0.5;
@@ -76,30 +77,19 @@ export const Code: React.FC<CodeProps> = ({
           style={style}
           showLineNumbers={showLineNumbers}
         >
-          {/* {showLineNumbers && (
-            <div>
-              {tokens.map((_line, lineIndex) => (
-                <div key={lineIndex} className={getLineNumberClass(lineIndex)}>
-                  {lineIndex + lineNumberStart}
-                </div>
+          {tokens.map((line, lineIndex) => (
+            <div
+              {...getLineProps({ line, key: lineIndex })}
+              className={getLineNumberClass(lineIndex)}
+            >
+              {showLineNumbers && (
+                <LineNumber>{lineIndex + lineNumberStart}</LineNumber>
+              )}
+              {line.map((token, key) => (
+                <span {...getTokenProps({ token, key })} />
               ))}
             </div>
-          )} */}
-          <div>
-            {tokens.map((line, lineIndex) => (
-              <div
-                {...getLineProps({ line, key: lineIndex })}
-                className={getLineNumberClass(lineIndex)}
-              >
-                {showLineNumbers && (
-                  <LineNumber>{lineIndex + lineNumberStart}</LineNumber>
-                )}
-                {line.map((token, key) => (
-                  <span {...getTokenProps({ token, key })} />
-                ))}
-              </div>
-            ))}
-          </div>
+          ))}
         </Pre>
       )}
     </Highlight>
