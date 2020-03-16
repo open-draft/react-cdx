@@ -9,6 +9,7 @@ import DefaultPrismTheme from 'prism-react-renderer/themes/nightOwl'
 export interface CodeProps {
   children: (api: {
     Preview: React.FC
+    focusLines: (index: number[]) => void
     copyToClipboard: () => Promise<void>
   }) => JSX.Element
   code: string
@@ -17,6 +18,7 @@ export interface CodeProps {
   filename?: string
   showLineNumbers?: boolean
   lineNumberStart?: number
+  focusedLines?: number[]
 }
 
 export const Code: React.FC<CodeProps> = ({
@@ -26,7 +28,9 @@ export const Code: React.FC<CodeProps> = ({
   theme = DefaultPrismTheme,
   showLineNumbers,
   lineNumberStart = 1,
+  focusedLines = [],
 }) => {
+  const [activeFocusedLines, focusLines] = React.useState<number[]>(focusedLines)
   const normalizedCode = React.useMemo(() => code.trim(), [code])
 
   const Preview = () => (
@@ -38,14 +42,34 @@ export const Code: React.FC<CodeProps> = ({
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre className={className} style={style}>
-          {tokens.map((line, lineIndex) => (
-            <div {...getLineProps({ line, key: lineIndex })}>
-              {showLineNumbers && <span>{lineIndex + lineNumberStart}</span>}
-              {line.map((token, key) => (
-                <span {...getTokenProps({ token, key })} />
+          {showLineNumbers && (
+            <div>
+              {tokens.map((_line, lineIndex) => (
+                <div
+                  className="line-number"
+                  data-line-focused={
+                    activeFocusedLines.includes(lineIndex) ? 'true' : 'false'
+                  }
+                >
+                  {lineIndex + lineNumberStart}
+                </div>
               ))}
             </div>
-          ))}
+          )}
+          <div>
+            {tokens.map((line, lineIndex) => (
+              <div
+                {...getLineProps({ line, key: lineIndex })}
+                data-line-focused={
+                  activeFocusedLines.includes(lineIndex) ? 'true' : 'false'
+                }
+              >
+                {line.map((token, key) => (
+                  <span {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            ))}
+          </div>
         </pre>
       )}
     </Highlight>
@@ -53,6 +77,7 @@ export const Code: React.FC<CodeProps> = ({
 
   return children({
     Preview,
+    focusLines,
     copyToClipboard: () => navigator.clipboard.writeText(normalizedCode),
   })
 }
