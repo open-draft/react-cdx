@@ -58,7 +58,7 @@ export const Code: React.FC<CodeProps> = ({
   const getLineNumberClass = (lineIndex: number) => {
     return [
       'line-number',
-      activeFocusedLines.includes(lineIndex) && 'line-number-focused',
+      activeFocusedLines.includes(lineIndex + 1) && 'line-number-focused',
     ]
       .filter(Boolean)
       .join(' ')
