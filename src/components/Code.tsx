@@ -38,7 +38,7 @@ const LineNumber = styled.span`
   margin-right: 0.75rem;
   width: 2em;
   user-select: none;
-  opacity: 0.5;
+  opacity: 0.6;
 `
 
 export const Code: React.FC<CodeProps> = ({
