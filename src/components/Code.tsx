@@ -49,6 +49,7 @@ export const Code: React.FC<CodeProps> = ({
   showLineNumbers,
   lineNumberStart = 1,
   focusedLines = [],
+  ...restProps
 }) => {
   const [activeFocusedLines, focusLines] = React.useState<number[]>(
     focusedLines
@@ -67,6 +68,7 @@ export const Code: React.FC<CodeProps> = ({
   const Preview = () => (
     <Highlight
       {...defaultProps}
+      {...restProps}
       code={normalizedCode}
       language={language}
       theme={theme}
