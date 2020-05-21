@@ -16,7 +16,7 @@ function queryUser(id: User) {
 `}
     language="ts"
     showLineNumbers
-    focusedLine={2}
+    focusedLines="2"
   >
     {({ Preview, copyToClipboard }) => (
       <div>
