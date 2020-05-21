@@ -6,34 +6,34 @@ type CodeWithVariantsProps = {
   children: (api: {
     variants: CodeVariant[]
     activeVariant: CodeVariant
-    setVariant: (index: number) => void
+    activeIndex: number
+    setVariantIndex: (index: number) => void
   }) => JSX.Element
 }
 
 type CodeVariant = {
   name: string
-} & Omit<CodeProps, 'children'>
+  codeProps: Omit<CodeProps, 'children'>
+}
 
 export const CodeWithVariants: React.FC<CodeWithVariantsProps> = ({
   variants,
   children,
 }) => {
-  const [activeVariantIndex, setVariant] = React.useState(0)
+  const [activeVariantIndex, setActiveVariantIndex] = React.useState(0)
   const activeVariant = React.useMemo(() => variants[activeVariantIndex], [
     variants,
     activeVariantIndex,
   ])
 
-  return (
-    <div>
-      {/* <p>
-        All variants:{' '}
-        {variants.map((variant, index) => (
-          <button onClick={() => setVariant(index)}>{variant.name}</button>
-        ))}
-      </p>
-      <Code code={activeVariant.code} language="javascript" /> */}
-      {children({ variants, activeVariant, setVariant })}
-    </div>
-  )
+  const setVariantIndex = (nextIndex: number) => {
+    setActiveVariantIndex(nextIndex)
+  }
+
+  return children({
+    variants,
+    activeVariant,
+    activeIndex: activeVariantIndex,
+    setVariantIndex,
+  })
 }
