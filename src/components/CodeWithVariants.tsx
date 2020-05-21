@@ -12,7 +12,7 @@ type CodeWithVariantsProps = {
 }
 
 type CodeVariant = {
-  name: string
+  [prop: string]: any
   codeProps: Omit<CodeProps, 'children'>
 }
 
