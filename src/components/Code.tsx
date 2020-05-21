@@ -13,6 +13,7 @@ export interface CodeProps {
     focusLines: (index: number[]) => void
     copyToClipboard: () => Promise<void>
   }) => JSX.Element
+  className?: string
   code: string
   language: Language
   theme?: PrismTheme
@@ -43,6 +44,7 @@ const LineNumber = styled.span`
 
 export const Code: React.FC<CodeProps> = ({
   children = ({ Preview }) => <Preview />,
+  className: classNameOverride,
   code,
   language = 'javascript',
   theme = DefaultPrismTheme,
@@ -55,6 +57,12 @@ export const Code: React.FC<CodeProps> = ({
     focusedLines
   )
   const normalizedCode = React.useMemo(() => code.trim(), [code])
+  const joinClassNames = React.useCallback(
+    className => {
+      return [className, classNameOverride].filter(Boolean).join(' ')
+    },
+    [classNameOverride]
+  )
 
   const getLineNumberClass = (lineIndex: number) => {
     return [
@@ -75,7 +83,7 @@ export const Code: React.FC<CodeProps> = ({
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <Pre
-          className={className}
+          className={joinClassNames(className)}
           style={style}
           showLineNumbers={showLineNumbers}
         >

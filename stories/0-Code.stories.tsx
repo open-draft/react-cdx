@@ -1,5 +1,6 @@
 import React from 'react'
 import { Code, CodeWithVariants } from '@'
+// import './main.css'
 
 export default {
   title: 'Code',
@@ -15,6 +16,7 @@ function queryUser(id: User) {
 `}
     language="ts"
     showLineNumbers
+    focusedLine={2}
   >
     {({ Preview, copyToClipboard }) => (
       <div>
@@ -29,6 +31,12 @@ function queryUser(id: User) {
 basicUsage.story = {
   name: 'Basic usage',
 }
+
+//
+//
+// =======================================================
+//
+//
 
 export const variantsUsage = () => (
   <CodeWithVariants
@@ -91,3 +99,54 @@ allUsers, err := client.Users(nil).Exec(ctx)
     )}
   </CodeWithVariants>
 )
+
+//
+//
+// =======================================================
+//
+//
+
+export const CodeWithSteps = () => {
+  return (
+    <CodeWithVariants
+      variants={[
+        {
+          name: 'Imports',
+          code: `
+import { composeMocks, rest } from 'msw'
+          `,
+        },
+        {
+          name: 'Define mocks',
+          code: `
+composeMocks(
+  rest.get('https://api.github.com/user/octocat', (req, res, ctx) => {
+    return res(
+      ctx.status(203),
+      ctx.json({
+        firstName: 'John'
+      })
+    )
+  })
+)
+          `,
+        },
+      ]}
+    >
+      {({ variants, activeVariant, activeIndex, setVariant }) => (
+        <div>
+          <h3>{activeVariant.name}</h3>
+          <Code {...activeVariant} showLineNumbers />
+          <div>
+            <button onClick={() => setVariant(activeIndex - 1)}>Prev</button>
+            <button onClick={() => setVariant(activeIndex + 1)}>Next</button>
+          </div>
+        </div>
+      )}
+    </CodeWithVariants>
+  )
+}
+
+CodeWithSteps.story = {
+  name: 'With steps',
+}
