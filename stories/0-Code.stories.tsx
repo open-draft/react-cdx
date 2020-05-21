@@ -59,7 +59,9 @@ const commentsOfPost = await prisma
       },
       {
         name: 'TypeScript',
-        language: 'typescript',
+        codeProps: {
+          language: 'typescript',
+        },
         code: `
 // Retrieve all users
 const allUsers: User[] = await prisma.users()
@@ -76,7 +78,9 @@ const commentsOfPost: Comment[] = await prisma
       },
       {
         name: 'Go',
-        language: 'go',
+        codeProps: {
+          language: 'go',
+        },
         code: `
 // Retrieve all users
 allUsers, err := client.Users(nil).Exec(ctx)
@@ -84,17 +88,21 @@ allUsers, err := client.Users(nil).Exec(ctx)
       },
     ]}
   >
-    {({ variants, activeVariant, setVariant }) => (
+    {({ variants, activeVariant, setVariantIndex }) => (
       <div>
         <p>
           All variants:{' '}
           {variants.map((variant, index) => (
-            <button key={index} onClick={() => setVariant(index)}>
+            <button key={index} onClick={() => setVariantIndex(index)}>
               {variant.name}
             </button>
           ))}
         </p>
-        <Code {...activeVariant} showLineNumbers />
+        <Code
+          {...activeVariant.codeProps}
+          showLineNumbers
+          code={activeVariant.code}
+        />
       </div>
     )}
   </CodeWithVariants>
@@ -133,13 +141,17 @@ composeMocks(
         },
       ]}
     >
-      {({ variants, activeVariant, activeIndex, setVariant }) => (
+      {({ variants, activeVariant, activeIndex, setVariantIndex }) => (
         <div>
           <h3>{activeVariant.name}</h3>
           <Code {...activeVariant} showLineNumbers />
           <div>
-            <button onClick={() => setVariant(activeIndex - 1)}>Prev</button>
-            <button onClick={() => setVariant(activeIndex + 1)}>Next</button>
+            <button onClick={() => setVariantIndex(activeIndex - 1)}>
+              Prev
+            </button>
+            <button onClick={() => setVariantIndex(activeIndex + 1)}>
+              Next
+            </button>
           </div>
         </div>
       )}
