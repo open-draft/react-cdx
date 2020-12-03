@@ -12,7 +12,6 @@ type FocusedLines = string
 export interface CodeProps {
   children?: (api: {
     Preview: React.FC
-    setLineFocus: (index: FocusedLines) => void
     copyToClipboard: () => Promise<void>
   }) => JSX.Element
   className?: string
@@ -65,16 +64,12 @@ export const Code: React.FC<CodeProps> = ({
   focusedLines = '',
   ...restProps
 }) => {
-  const [activeFocusedLines, setLineFocus] = React.useState<string>(
-    focusedLines
-  )
   const focusedLineNumbers = React.useMemo(() => {
-    // transform `activeFocusedLines` to an array of line numbers.
-    if (!activeFocusedLines) {
+    if (!focusedLines) {
       return []
     }
 
-    return activeFocusedLines
+    return focusedLines
       .split(',')
       .reduce<Array<string | number>>((acc, index) => {
         if (index.includes('-')) {
@@ -91,7 +86,7 @@ export const Code: React.FC<CodeProps> = ({
         return acc.concat(index)
       }, [])
       .map(Number)
-  }, [activeFocusedLines])
+  }, [focusedLines])
 
   const normalizedCode = React.useMemo(() => code.trim(), [code])
   const joinClassNames = React.useCallback(
@@ -144,7 +139,6 @@ export const Code: React.FC<CodeProps> = ({
 
   return children({
     Preview,
-    setLineFocus,
     copyToClipboard: () => navigator.clipboard.writeText(normalizedCode),
   })
 }
