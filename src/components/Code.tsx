@@ -111,13 +111,12 @@ export const Code: React.FC<CodeProps> = ({
   const Preview = () => (
     <Highlight
       {...defaultProps}
-      {...restProps}
       code={normalizedCode}
       language={language}
       theme={theme}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <Pre className={joinClassNames(className)} style={style}>
+        <Pre className={joinClassNames(className)} style={style} {...restProps}>
           {tokens.map((line, lineIndex) => (
             <Line
               {...getLineProps({ line, key: lineIndex })}
