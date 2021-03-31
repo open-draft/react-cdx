@@ -1,4 +1,5 @@
 import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
 import typescript from 'rollup-plugin-typescript2'
 
 export default {
@@ -6,7 +7,7 @@ export default {
   external: ['react'],
   output: {
     file: 'lib/index.js',
-    format: 'esm',
+    format: 'cjs',
   },
-  plugins: [resolve(), typescript()],
+  plugins: [resolve(), typescript(), commonjs()],
 }
