@@ -1,6 +1,6 @@
 {
   "name": "react-snippet",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Code snippet preview and interactions for React.",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -15,7 +15,8 @@
   "scripts": {
     "build": "rimraf ./lib && rollup -c rollup.config.ts",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepublishOnly": "yarn build"
   },
   "devDependencies": {
     "@babel/core": "^7.13.14",
