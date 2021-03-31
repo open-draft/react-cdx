@@ -1,0 +1,50 @@
+@import './base.css';
+
+.prism-code {
+  --foreground-color: #ddd;
+  --background-color: #1b2227;
+}
+
+.token.interactive {
+  padding: 0 0.25em;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.token.interactive:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.token.comment {
+  color: var(--color-white);
+}
+
+.token.keyword {
+  color: var(--color-pink);
+  font-weight: 600;
+}
+
+.token.string {
+  color: var(--color-green);
+}
+
+.token.function,
+.token.method {
+  color: var(--color-blue);
+}
+
+.token.operator {
+  color: var(--color-pink);
+}
+
+.token.tag {
+  color: var(--color-blue);
+}
+
+.token.tag.attr-value {
+  color: var(--color-green);
+}
+
+.token.tag.attr-name {
+  color: var(--color-yellow);
+}

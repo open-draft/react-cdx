@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ES2015",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "outDir": "./lib",
+    "declaration": true
+  },
+  "include": ["src/**/*.tsx"],
+  "exclude": ["node_modules", "src/stories/**/*"]
+}

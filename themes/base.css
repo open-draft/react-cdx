@@ -1,0 +1,29 @@
+.prism-code {
+  --color-white: #888888;
+  --color-pink: #ff25ac;
+  --color-green: #00b78e;
+  --color-blue: #00acff;
+  --color-yellow: #d9931e;
+
+  padding: 0.5rem 0;
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+}
+
+.line {
+  padding: 0.2rem 1rem;
+}
+
+.line.focused {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.line-number {
+  display: inline-block;
+  padding-right: 2ch;
+  width: 1ch;
+
+  text-align: right;
+  opacity: 0.5;
+  user-select: none;
+}
