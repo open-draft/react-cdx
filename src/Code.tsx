@@ -8,6 +8,7 @@ export interface CodeProps {
   language?: Language
   showNumbers?: boolean
   startLineNumber?: number
+  formatLineNumber?(lineNumber: number): JSX.Element
   focusedLines?: LineRange[]
   tokens?: TokenDefinition[]
 }
@@ -56,12 +57,15 @@ export function Code({
   language = 'javascript',
   showNumbers,
   startLineNumber,
-  focusedLines = [],
+  formatLineNumber,
+  focusedLines,
   tokens: interactiveTokens,
 }: CodeProps) {
   const lines = code.trim().split('\n')
   const shouldDisplayLineNumbers =
     showNumbers ?? (lines.length > 1 || startLineNumber)
+
+  console.log({ focusedLines })
 
   return (
     <Highlight
@@ -83,8 +87,13 @@ export function Code({
         >
           {tokens.map((line, key) => {
             const lineNumber = key + (startLineNumber || 1)
-            const isFocused = isFocusedLine(lineNumber, focusedLines)
-            const focusedClassName = isFocused ? 'focused' : null
+            const isFocused = isFocusedLine(lineNumber, focusedLines || [])
+            const focusedClassName =
+              focusedLines?.length > 0
+                ? isFocused
+                  ? 'focused'
+                  : 'unfocused'
+                : null
 
             return (
               <div
@@ -92,7 +101,9 @@ export function Code({
                 className={joinClassNames('line', focusedClassName)}
               >
                 {shouldDisplayLineNumbers && (
-                  <span className="line-number">{lineNumber}</span>
+                  <span className="line-number">
+                    {formatLineNumber?.(lineNumber) ?? lineNumber}
+                  </span>
                 )}
                 <span className="line-content">
                   {line.map((token, key) => {
