@@ -3,6 +3,7 @@ import Highlight, { Language, defaultProps } from 'prism-react-renderer'
 import { joinClassNames } from './utils/joinClassNames'
 
 export interface CodeProps {
+  className?: string
   code: string
   language?: Language
   showNumbers?: boolean
@@ -50,6 +51,7 @@ function findToken(
 }
 
 export function Code({
+  className,
   code,
   language = 'javascript',
   showNumbers,
@@ -68,8 +70,17 @@ export function Code({
       code={code.trim()}
       language={language}
     >
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={className} style={style}>
+      {({
+        className: containerClassName,
+        style,
+        tokens,
+        getLineProps,
+        getTokenProps,
+      }) => (
+        <pre
+          className={joinClassNames(containerClassName, className)}
+          style={style}
+        >
           {tokens.map((line, key) => {
             const lineNumber = key + (startLineNumber || 1)
             const isFocused = isFocusedLine(lineNumber, focusedLines)

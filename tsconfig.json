@@ -3,6 +3,7 @@
     "module": "ESNext",
     "target": "ES2015",
     "jsx": "react",
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "outDir": "./lib",
     "declaration": true
