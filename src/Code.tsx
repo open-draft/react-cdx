@@ -65,8 +65,6 @@ export function Code({
   const shouldDisplayLineNumbers =
     showNumbers ?? (lines.length > 1 || startLineNumber)
 
-  console.log({ focusedLines })
-
   return (
     <Highlight
       {...defaultProps}
@@ -121,9 +119,9 @@ export function Code({
                     // Prevent treating leading/trailing whitespace
                     // as a part of the token.
                     const [, leadingSpace] =
-                      token.content.match(/(\s+).+/) || []
+                      token.content.match(/^(\s+).+/g) || []
                     const [, trailingSpace] =
-                      token.content.match(/\w+(\s+)/) || []
+                      token.content.match(/\w+(\s+)$/g) || []
                     const shouldTrimContent = !!leadingSpace || !!trailingSpace
 
                     if (shouldTrimContent) {
